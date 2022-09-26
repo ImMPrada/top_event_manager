@@ -4,6 +4,11 @@ path_to_file = 'event_attendees.csv'
 
 puts 'Event Manager Initialized!'
 
-contents = File.read(path_to_file) if File.exist?(path_to_file)
+return false unless File.exist?(path_to_file)
+
+contents = File.read(path_to_file)
+lines = File.readlines(path_to_file)
 puts contents
+
+lines.each { |line| puts line }
 
