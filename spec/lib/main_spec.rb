@@ -12,4 +12,30 @@ describe 'lib/main' do
       expect(read_line(line)).to eq('John Smith: john.smith@mail.com')
     end
   end
+
+  describe 'when read_file is called' do
+    let(:path_to_file) { './spec/event_attendees_test.csv' }
+    let(:returned_array) do
+      [
+        " ,RegDate,first_Name,last_Name,Email_Address,HomePhone,Street,City,State,Zipcode\n",
+        "1,11/12/08 10:47,Allison,Nguyen,arannon@jumpstartlab.com,6154385000,3155 19th St NW,Washington,DC,20010\n"
+      ]
+    end
+
+    it 'returns an array' do
+      expect(read_file(path_to_file, false)).to be_a(Array)
+    end
+
+    describe 'when have_header is true' do
+      it 'returns an array without the header' do
+        expect(read_file(path_to_file, true)).to eq(returned_array[1..])
+      end
+    end
+
+    describe 'when have_header is false' do
+      it 'returns an array with the header' do
+        expect(read_file(path_to_file, false)).to eq(returned_array)
+      end
+    end
+  end
 end
