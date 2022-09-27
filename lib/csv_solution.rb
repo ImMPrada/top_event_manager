@@ -16,8 +16,7 @@ def use_csv(path_to_file, have_header: true)
 end
 
 def fix_zipcode(zipcode)
-  zipcode = '' if zipcode.nil?
-
+  zipcode = zipcode.to_s
   return zipcode.rjust(5, '0') if zipcode.length < 5
   return zipcode if zipcode.length == 5
 
