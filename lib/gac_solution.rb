@@ -3,7 +3,7 @@ require 'byebug'
 require_relative 'csv_solution'
 
 CIVIC_INFO = Google::Apis::CivicinfoV2::CivicInfoService.new
-CIVIC_INFO.key = 'AIzaSyClRzDqDh5MsXwnCWi0kOiiBivP6JsSyBw'
+CIVIC_INFO.key = ENV['GAC_API_KEY']
 CALL_ERROR_MESSAGE = 'You can find your representatives by visiting www.commoncause.org/take-action/find-elected-officials'.freeze
 
 def representations_of_zipcode(zipcode)

@@ -1,3 +1,5 @@
+require 'dotenv/load'
+
 require_relative '../lib/rudimentary'
 require_relative '../lib/csv_solution'
 
