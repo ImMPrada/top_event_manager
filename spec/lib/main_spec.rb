@@ -51,4 +51,17 @@ describe 'lib/main' do
       expect(rudimentary_extraction(path_to_file).class).to be(Array)
     end
   end
+
+  describe 'when use_csv is called' do
+    let(:path_to_file) { './spec/event_attendees_test.csv' }
+    let(:path_to_inexisting_file) { './spec/inexisting_file_test.csv' }
+
+    it 'returns nil if the file does not exist' do
+      expect(use_csv(path_to_inexisting_file)).to be_nil
+    end
+
+    it 'returns CSV class if the file exists' do
+      expect(use_csv(path_to_file).class).to be(CSV)
+    end
+  end
 end
