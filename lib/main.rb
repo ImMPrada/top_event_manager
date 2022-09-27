@@ -2,13 +2,23 @@ require 'byebug'
 
 path_to_file = 'event_attendees.csv'
 
-puts 'Event Manager Initialized!'
+def rudimentary_extraction(path_to_file, have_header = true)
+  puts 'Event Manager Initialized!'
+  return false unless File.exist?(path_to_file)
 
-return false unless File.exist?(path_to_file)
+  jump_first_line = have_header
+  lines = File.readlines(path_to_file)
+  lines.each do |line|
+    if jump_first_line
+      jump_first_line = false
+      next
+    end
 
-contents = File.read(path_to_file)
-lines = File.readlines(path_to_file)
-puts contents
+    columns = line.split(',')
+    name = columns[(2..3)].join(' ')
+    email = columns[4]
+    puts "#{name} --- #{email}"
+  end
+end
 
-lines.each { |line| puts line }
-
+rudimentary_extraction(path_to_file)
