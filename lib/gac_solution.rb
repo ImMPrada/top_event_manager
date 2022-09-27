@@ -1,10 +1,21 @@
 require 'google/apis/civicinfo_v2'
+require 'byebug'
 require_relative 'csv_solution'
 
-civic_info = Google::Apis::CivicinfoV2::CivicInfoService.new
-civic_info.key = 'AIzaSyClRzDqDh5MsXwnCWi0kOiiBivP6JsSyBw'
-response = civic_info.representative_info_by_address(address: 80202, levels: 'country', roles: ['legislatorUpperBody', 'legislatorLowerBody'])
+CIVIC_INFO = Google::Apis::CivicinfoV2::CivicInfoService.new
+CIVIC_INFO.key = 'AIzaSyClRzDqDh5MsXwnCWi0kOiiBivP6JsSyBw'
 
-response.officials.each do |official|
-  puts official.name
+def representations_of_zipcode(zipcode)
+  response = CIVIC_INFO.representative_info_by_address(
+    address: zipcode,
+    levels: 'country',
+    roles: %w[legislatorUpperBody legislatorLowerBody]
+  )
+
+  response.officials
+rescue Google::Apis::ServerError, Google::Apis::ClientError
+  'You can find your representatives by visiting www.commoncause.org/take-action/find-elected-officials'
 end
+
+puts representations_of_zipcode('00000')
+puts representations_of_zipcode('80203')
