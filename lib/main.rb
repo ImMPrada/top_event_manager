@@ -22,7 +22,7 @@ def use_csv(path_to_file, have_header: true)
     header_converters: :symbol
   )
 
-  contents.each { |row| puts "#{row[:first_name]} #{row[:last_name]}: #{row[:email_address]}" }
+  contents.each { |row| puts "#{row[:first_name]} #{row[:last_name]}: #{fix_zipcode(row[:zipcode])}" }
   contents
 end
 
@@ -35,6 +35,15 @@ def read_line(line)
   name = columns[(2..3)].join(' ')
   email = columns[4]
   "#{name}: #{email}"
+end
+
+def fix_zipcode(zipcode)
+  zipcode = '' if zipcode.nil?
+
+  return zipcode.rjust(5, '0') if zipcode.length < 5
+  return zipcode if zipcode.length == 5
+
+  zipcode[0..4]
 end
 
 rudimentary_extraction(path_to_file)
