@@ -38,4 +38,17 @@ describe 'lib/main' do
       end
     end
   end
+
+  describe 'when rudimentary_extraction is called' do
+    let(:path_to_file) { './spec/event_attendees_test.csv' }
+    let(:path_to_inexisting_file) { './spec/inexisting_file_test.csv' }
+
+    it 'returns nil if the file does not exist' do
+      expect(rudimentary_extraction(path_to_inexisting_file)).to be_nil
+    end
+
+    it 'returns an array if the file exists' do
+      expect(rudimentary_extraction(path_to_file).class).to be(Array)
+    end
+  end
 end
