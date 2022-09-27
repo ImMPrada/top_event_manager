@@ -6,19 +6,20 @@ def rudimentary_extraction(path_to_file, have_header = true)
   puts 'Event Manager Initialized!'
   return false unless File.exist?(path_to_file)
 
-  jump_first_line = have_header
-  lines = File.readlines(path_to_file)
-  lines.each do |line|
-    if jump_first_line
-      jump_first_line = false
-      next
-    end
+  lines = read_file(path_to_file, have_header)
 
-    columns = line.split(',')
-    name = columns[(2..3)].join(' ')
-    email = columns[4]
-    puts "#{name} --- #{email}"
-  end
+  lines.each { |line| puts read_line(line) }
+end
+
+def read_file(path_to_file, have_header)
+  have_header ? File.readlines(path_to_file)[1..] : File.readlines(path_to_file)
+end
+
+def read_line(line)
+  columns = line.split(',')
+  name = columns[(2..3)].join(' ')
+  email = columns[4]
+  "#{name}: #{email}"
 end
 
 rudimentary_extraction(path_to_file)
