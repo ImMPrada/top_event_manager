@@ -9,8 +9,8 @@ describe 'lib/gac_solution' do
       expect(representations_of_zipcode(zipcode).class).to be(Array)
     end
 
-    it 'returns an array of representatives' do
-      expect(representations_of_zipcode(zipcode).first.class).to be(Google::Apis::CivicinfoV2::Official)
+    it 'returns an array of strings' do
+      expect(representations_of_zipcode(zipcode).first.class).to be(String)
     end
 
     it 'returns a message if the zipcode is invalid' do
