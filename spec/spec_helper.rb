@@ -1,4 +1,5 @@
-require './lib/main'
+require './lib/rudimentary'
+require './lib/csv_solution'
 
 RSpec.configure do |config|
   # Use the specified formatter
