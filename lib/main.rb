@@ -1,14 +1,24 @@
 require 'byebug'
+require 'csv'
 
 path_to_file = 'event_attendees.csv'
 
 def rudimentary_extraction(path_to_file, have_header = true)
   puts 'Event Manager Initialized!'
-  return false unless File.exist?(path_to_file)
+  return nil unless File.exist?(path_to_file)
 
   lines = read_file(path_to_file, have_header)
 
   lines.each { |line| puts read_line(line) }
+end
+
+def use_csv(path_to_file, have_header = true)
+  puts 'Event Manager Initialized!'
+  return nil unless File.exist?(path_to_file)
+
+  contents = CSV.open(path_to_file, headers: have_header)
+  contents.each { |row| puts "#{row[(2..3)].join(' ')}: #{row[4]}" }
+  contents
 end
 
 def read_file(path_to_file, have_header)
@@ -23,3 +33,4 @@ def read_line(line)
 end
 
 rudimentary_extraction(path_to_file)
+use_csv(path_to_file)
