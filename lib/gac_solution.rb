@@ -4,22 +4,25 @@ require_relative 'csv_solution'
 
 CIVIC_INFO = Google::Apis::CivicinfoV2::CivicInfoService.new
 CIVIC_INFO.key = ENV['GAC_API_KEY']
-CALL_ERROR_MESSAGE = 'You can find your representatives by visiting www.commoncause.org/take-action/find-elected-officials'.freeze
+CALL_ERROR_MESSAGE = 'Visit www.commoncause.org/take-action/find-elected-officials'.freeze
 RATE_LIMIT_ERROR_MESSAGE = 'Rate limit reached, please try later'.freeze
 
 def representations_of_zipcode(zipcode)
   puts "Getting representatives for #{zipcode}..."
-  response = CIVIC_INFO.representative_info_by_address(
-    address: zipcode,
-    levels: 'country',
-    roles: %w[legislatorUpperBody legislatorLowerBody]
-  )
-
+  response = call_to_api(zipcode)
   legislators_names(response.officials)
 rescue Google::Apis::ServerError, Google::Apis::ClientError
   CALL_ERROR_MESSAGE
 rescue Google::Apis::RateLimitError
   RATE_LIMIT_ERROR_MESSAGE
+end
+
+def call_to_api(zipcode)
+  CIVIC_INFO.representative_info_by_address(
+    address: zipcode,
+    levels: 'country',
+    roles: %w[legislatorUpperBody legislatorLowerBody]
+  )
 end
 
 def legislators_names(legislators)
