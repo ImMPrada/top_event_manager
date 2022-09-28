@@ -7,7 +7,7 @@ CIVIC_INFO.key = ENV['GAC_API_KEY']
 CALL_ERROR_MESSAGE = 'Visit www.commoncause.org/take-action/find-elected-officials'.freeze
 RATE_LIMIT_ERROR_MESSAGE = 'Rate limit reached, please try later'.freeze
 
-def representations_of_zipcode(zipcode, only_names: false)
+def representations_of_zipcode(zipcode, only_names)
   puts "Getting representatives for #{zipcode}..."
   response = call_to_api(zipcode)
   return legislators_names(response.officials) if only_names
@@ -19,7 +19,7 @@ rescue Google::Apis::RateLimitError
   RATE_LIMIT_ERROR_MESSAGE
 end
 
-def call_to_api(zipcode, complete_data: false)
+def call_to_api(zipcode)
   CIVIC_INFO.representative_info_by_address(
     address: zipcode,
     levels: 'country',
@@ -31,7 +31,7 @@ def legislators_names(legislators)
   legislators.map(&:name)
 end
 
-def legislators_by_zipcode(path_to_file)
+def legislators_by_zipcode(path_to_file, only_names = true)
   contents = use_csv(path_to_file)
   response = []
 
@@ -40,7 +40,7 @@ def legislators_by_zipcode(path_to_file)
     zipcode = row[:zipcode]
     next if zipcode == '00000'
 
-    legislators = representations_of_zipcode(zipcode)
+    legislators = representations_of_zipcode(zipcode, only_names)
     response << { name:, zipcode:, legislators: }
   end
 
