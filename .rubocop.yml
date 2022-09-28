@@ -4,6 +4,9 @@ require:
 Style/FrozenStringLiteralComment:
   Enabled: false
 
+Style/OptionalBooleanParameter:
+  Enabled: false
+
 convention:Style/Documentation:
   Enabled: false
 
