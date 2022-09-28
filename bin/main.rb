@@ -14,11 +14,9 @@ path_to_file = 'event_attendees.csv'
 data = legislators_by_zipcode(path_to_file)
 data_for_erb = legislators_by_zipcode(path_to_file, false)
 
-puts data[0]
-
 html_template = File.read('form-letter.html')
 erb_template = File.read('form_letter.erb')
-puts erb_template
 
 fill_template(html_template, data[1])
-fill_erb_template(erb_template, data_for_erb[1])
+
+data_for_erb.each { |data| fill_erb_template(erb_template, data) }
