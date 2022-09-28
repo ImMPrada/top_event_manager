@@ -15,6 +15,9 @@ data = legislators_by_zipcode(path_to_file)
 
 puts data[0]
 
-template = File.read('form-letter.html')
+html_template = File.read('form-letter.html')
+erb_template = File.read('form_letter.erb')
+puts erb_template
 
-fill_template(template, data[1])
+fill_template(html_template, data[1])
+fill_erb_template(erb_template, data[1])
