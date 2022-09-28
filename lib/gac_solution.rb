@@ -7,17 +7,19 @@ CIVIC_INFO.key = ENV['GAC_API_KEY']
 CALL_ERROR_MESSAGE = 'Visit www.commoncause.org/take-action/find-elected-officials'.freeze
 RATE_LIMIT_ERROR_MESSAGE = 'Rate limit reached, please try later'.freeze
 
-def representations_of_zipcode(zipcode)
+def representations_of_zipcode(zipcode, only_names: false)
   puts "Getting representatives for #{zipcode}..."
   response = call_to_api(zipcode)
-  legislators_names(response.officials)
+  return legislators_names(response.officials) if only_names
+
+  response.officials
 rescue Google::Apis::ServerError, Google::Apis::ClientError
   CALL_ERROR_MESSAGE
 rescue Google::Apis::RateLimitError
   RATE_LIMIT_ERROR_MESSAGE
 end
 
-def call_to_api(zipcode)
+def call_to_api(zipcode, complete_data: false)
   CIVIC_INFO.representative_info_by_address(
     address: zipcode,
     levels: 'country',
