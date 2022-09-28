@@ -42,5 +42,5 @@ def legislators_by_zipcode(path_to_file)
     response << { name:, zipcode:, legislators: }
   end
 
-  puts response
+  response
 end
