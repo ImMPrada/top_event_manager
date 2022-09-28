@@ -11,8 +11,14 @@ def use_csv(path_to_file, have_header: true)
     header_converters: :symbol
   )
 
-  contents.each { |row| puts "#{row[:first_name]} #{row[:last_name]}: #{fix_zipcode(row[:zipcode])}" }
-  contents
+  contents.map { |row| build_response_hash(row) }
+end
+
+def build_response_hash(row)
+  {
+    name: "#{row[:first_name]} #{row[:last_name]}",
+    zipcode: fix_zipcode(row[:zipcode])
+  }
 end
 
 def fix_zipcode(zipcode)

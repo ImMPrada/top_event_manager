@@ -9,8 +9,8 @@ describe 'lib/csv_solution' do
       expect(use_csv(path_to_inexisting_file)).to be_nil
     end
 
-    it 'returns CSV class if the file exists' do
-      expect(use_csv(path_to_file).class).to be(CSV)
+    it 'returns Array if the file exists' do
+      expect(use_csv(path_to_file).class).to be(Array)
     end
   end
 
